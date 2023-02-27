@@ -30,6 +30,55 @@ describe('/POST movies', () => {
         done();
         })
     })
+
+    it('it should not POST new movies (without input id)', (done) => {
+        let movies = {
+            "title" : "Pengabdi Setan 2 Comunion",
+            "description" : "dalah sebuah film horor Indonesia tahun 2022 yang disutradarai dan ditulis oleh Joko Anwar sebagai sekuel dari film tahun 2017, Pengabdi Setan.",
+            "rating" : 7,
+            "image" : ""
+        }
+        chai.request(server)
+        .post(`/movies`)
+        .send(movies)
+        .end((err, res) => {
+            res.should.have.status(422);
+        done();
+        })
+    })
+
+    it('it should not POST new movies (input id not integer)', (done) => {
+        let movies = {
+            "id" : "1aaa",
+            "title" : "Pengabdi Setan 2 Comunion",
+            "description" : "dalah sebuah film horor Indonesia tahun 2022 yang disutradarai dan ditulis oleh Joko Anwar sebagai sekuel dari film tahun 2017, Pengabdi Setan.",
+            "rating" : 7,
+            "image" : ""
+        }
+        chai.request(server)
+        .post(`/movies`)
+        .send(movies)
+        .end((err, res) => {
+            res.should.have.status(422);
+        done();
+        })
+    })
+
+    it('it should not POST new movies (without input title)', (done) => {
+        let movies = {
+            "id" : 1,
+            "description" : "dalah sebuah film horor Indonesia tahun 2022 yang disutradarai dan ditulis oleh Joko Anwar sebagai sekuel dari film tahun 2017, Pengabdi Setan.",
+            "rating" : 7,
+            "image" : ""
+        }
+        chai.request(server)
+        .post(`/movies`)
+        .send(movies)
+        .end((err, res) => {
+            res.should.have.status(422);
+        done();
+        })
+    })
 })
 
 
